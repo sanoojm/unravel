@@ -10,7 +10,7 @@ variable "subnet_id" {}
 variable "ami_id" {}
 variable "vpc_id" {}
 variable "cidr_admin_whitelist" { default = [] }
-variable "key_pair" {}
+variable "key_pair_name" {}
 variable "tags" {}
 variable "instance_profile_name" {}
 

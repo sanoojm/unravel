@@ -31,8 +31,13 @@ data "aws_ami" "centos" {
 }
 
 # Get the subnet details including VPC id.
-data "aws_subnet" "subnet" {
+data "aws_subnet" "public_subnet" {
   id = var.public_subnet_id
+}
+
+# Get the subnet details including VPC id.
+data "aws_subnet" "private_subnet" {
+  id = var.private_subnet_id
 }
 
 # Create user data file using templates.
@@ -41,14 +46,18 @@ data "template_file" "unravel_user_data" {
   template = file("./templates/ec2/userdata.sh")
 
   vars = {
-    version="4.7.0"
+    version     = "4.7.0"
     url_version = "4.7.0.0"
-    username = "admin"
-    password = "unraveldata"
-    region = var.region
+    username    = "admin"
+    password    = "unraveldata"
+    region      = var.region
   }
 }
 
+# Get Route table assosiated with the pubclis subnet
 data "aws_route_table" "route" {
   subnet_id = var.public_subnet_id
 }
+
+# Identify the Caller account details
+data "aws_caller_identity" "current" {}

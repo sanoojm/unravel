@@ -6,7 +6,7 @@ locals {
 
 # Get the subnet details including VPC id.
 data "aws_subnet" "instance_subnet" {
-  id    = var.subnet_id
+  id = var.subnet_id
 }
 
 # Creates a Bastion/Jump EC2 instance
@@ -17,7 +17,7 @@ resource "aws_instance" "ud_server" {
   availability_zone      = data.aws_subnet.instance_subnet.availability_zone
   instance_type          = var.instance_type
   subnet_id              = var.subnet_id
-  key_name               = var.key_pair
+  key_name               = var.key_pair_name
   vpc_security_group_ids = var.sg_ids
   iam_instance_profile   = var.instance_profile_name
 

@@ -33,10 +33,10 @@ resource "aws_security_group" "whitelist" {
     for_each = var.whitelist_self.inbound
 
     content {
-      protocol = rule.value.protocol
+      protocol  = rule.value.protocol
       from_port = rule.value.from_port
-      to_port = rule.value.to_port
-      self = true
+      to_port   = rule.value.to_port
+      self      = true
     }
   }
 

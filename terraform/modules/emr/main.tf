@@ -10,10 +10,10 @@ resource "aws_emr_cluster" "cluster" {
 
   ec2_attributes {
     subnet_id                         = var.subnet_id
-    emr_managed_master_security_group = aws_security_group.sg.id
-    emr_managed_slave_security_group  = aws_security_group.sg.id
-    instance_profile                  = aws_iam_instance_profile.emr_profile.arn
-    key_name = var.key_pair
+    emr_managed_master_security_group = var.security_group_id
+    emr_managed_slave_security_group  = var.security_group_id
+    instance_profile                  = var.emr_profile_arn
+    key_name                          = var.key_name
   }
 
   master_instance_group {
@@ -39,10 +39,15 @@ resource "aws_emr_cluster" "cluster" {
     env  = "env"
   }
 
-  bootstrap_action {
-    path = "s3://elasticmapreduce/bootstrap-actions/run-if"
-    name = "runif"
-    args = ["instance.isMaster=true", "echo running on master node"]
+  dynamic "bootstrap_action" {
+    iterator = scripts
+    for_each = var.bootstrap
+
+    content {
+      path = scripts.value.path
+      name = scripts.value.name
+      args = scripts.value.args
+    }
   }
 
   configurations_json = <<EOF
@@ -74,7 +79,7 @@ resource "aws_emr_cluster" "cluster" {
   ]
 EOF
 
-  service_role = aws_iam_role.iam_emr_service_role.arn
+  service_role = var.emr_service_role_arn
 }
 
 

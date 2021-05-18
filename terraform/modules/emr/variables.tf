@@ -1,9 +1,11 @@
 variable "emr_version" {}
-variable "key_pair" {}
+variable "key_name" {}
 variable "subnet_id" {}
-variable "whitelist_sg" { default = { "inbound" : [] } }
-variable "whitelist_self" { default = { "inbound" : [] } }
-variable "tags" {}
-variable "cidr_admin_whitelist" { default = [] }
-variable "security_groups" { default = [] }
+variable "security_group_id" {}
 
+variable "tags" {}
+variable "emr_profile_arn" {}
+
+variable "bootstrap" {}
+
+variable "emr_service_role_arn" {}

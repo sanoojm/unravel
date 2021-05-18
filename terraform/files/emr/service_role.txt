@@ -1,0 +1,25 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": [
+          "lambda.amazonaws.com",
+          "states.amazonaws.com",
+          "datapipeline.amazonaws.com",
+          "sagemaker.amazonaws.com",
+          "codedeploy.amazonaws.com",
+          "events.amazonaws.com",
+          "redshift.amazonaws.com",
+          "ec2.amazonaws.com",
+          "codepipeline.amazonaws.com",
+          "elasticmapreduce.amazonaws.com",
+          "application-autoscaling.amazonaws.com"
+        ]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
